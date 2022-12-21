@@ -1,0 +1,79 @@
+﻿
+@model List<STOCKAPI.Models.PriceHis>
+
+<style>
+    h1, h2 {
+        text-align: center;
+    }
+</style>
+@{
+    ViewBag.Title = "STOCK";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--form tìm kiếm-->
+<form name="timkiem">
+    @using (Html.BeginForm("Index", "Home"))
+    {
+        <div class="form-group form-inline">
+            <input placeholder="Nhập mã chứng khoán" type="text" name="mack" id="mack" class="form-control" />
+            <input type="submit" name="submit" value="Tìm kiếm" class="form-control" />
+        </div>
+    }
+</form>
+
+@using (Html.BeginForm("Index", "Home"))
+{
+    <div class="form-group form-inline">
+        <input placeholder="Nhập mã chứng khoán" type="text" name="mack" id="mack" class="form-control" />
+        <input placeholder="Nhập số giờ" type="text" name="time" id="time" class="form-control" />
+        <input type="submit" name="submit" value="Tìm kiếm" class="form-control" />
+    </div>
+}
+
+
+@using (Html.BeginForm("Index", "Home"))
+{
+    <div class="form-group form-inline">
+        <input placeholder="Nhập mã chứng khoán" type="text" name="mack" id="mack" class="form-control" />
+        <input placeholder="Nhập giá trên" type="text" name="vunggiatren" id="vunggiatren" class="form-control" />
+        <input placeholder="Nhập giá dưới" type="text" name="vunggiaduoi" id="vunggiaduoi" class="form-control" />
+        <input type="submit" name="submit" value="Tìm kiếm" class="form-control" />
+    </div>
+}
+
+@if (Model != null)
+{
+    <h2>Thông tin cần tìm kiếm</h2>
+    <p>Mã chứng khoán: @ViewBag.tenck</p>
+    if (ViewBag.kltb != null)
+    {
+        <p>Khối lượng trung bình: @ViewBag.kltb</p>
+        <h3>Các thời điểm có khối lượng đột biến (Khối lượng trung bình*2)</h3>
+    }
+
+    <table class="table table-bordered" align="center">
+
+        <tr>
+            <th>Thời gian</th>
+            <th>Giá cao nhất</th>
+            <th>Giá thấp nhất</th>
+            <th>Giá mở cửa</th>
+            <th>Giá đóng cửa</th>
+            <th>Khối lượng</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Time</td>
+                <td>@item.High</td>
+                <td>@item.Low</td>
+                <td>@item.Openprice</td>
+                <td>@item.Closeprice</td>
+                <td>@item.Volume</td>
+            </tr>
+        }
+
+    </table>
+}
